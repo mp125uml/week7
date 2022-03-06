@@ -101,10 +101,9 @@ podTemplate(yaml: '''
     stage('Build Java Image') {
       container('kaniko') {
         stage('Build a container') {
-	  if [ $BRANCH_NAME="playground" ]
-          then 
-	    exit 0
-	  fi
+          if($BRANCH_NAME == "playground") {
+              exit
+          }
           sh '''
           echo 'FROM openjdk:8-jre' > Dockerfile
           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
