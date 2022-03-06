@@ -99,7 +99,7 @@ podTemplate(yaml: '''
           echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
           ls /mnt/*jar
           mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination dlambrig/hello-kaniko:1.0
+          /kaniko/executor --context `pwd` --destination mattp262/hello-kaniko:1.0
           '''
         }
       }
