@@ -98,7 +98,6 @@ podTemplate(yaml: '''
         currentBuild.result = 'FAILURE'
       }
     }
-  }
 
     stage('Build Java Image') {
       container('kaniko') {
@@ -116,3 +115,4 @@ podTemplate(yaml: '''
     }
 
   }
+}
