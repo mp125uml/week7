@@ -95,8 +95,8 @@ podTemplate(yaml: '''
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
-          cd /home/jenkins/agent/workspace/week7/
-          sed -i '4 a /** Main app */' /home/jenkins/agent/workspace/week7/src/main/java/com/leszko/calculator/Calculator.java
+          cd /home/jenkins/agent/workspace/week7_${env.GIT_BRANCH}/
+          sed -i '4 a /** Main app */' /home/jenkins/agent/workspace/week7_${env.GIT_BRANCH}/src/main/java/com/leszko/calculator/Calculator.java
           chmod +x gradlew
           ./gradlew build
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
