@@ -85,7 +85,7 @@ podTemplate(yaml: '''
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
-          cd /home/jenkins/agent/workspace/week7_xxx$BRANCH_NAME/
+          cd /home/jenkins/agent/workspace/week7_$BRANCH_NAME/
           sed -i '4 a /** Main app */' /home/jenkins/agent/workspace/week7_$BRANCH_NAME/src/main/java/com/leszko/calculator/Calculator.java
           chmod +x gradlew
           ./gradlew build
@@ -99,6 +99,7 @@ podTemplate(yaml: '''
     }
 
     stage('Build Java Image') {
+      when { anyOf { branch 'master'; branch 'feature' } }
       container('kaniko') {
         stage('Build a container') {
           sh '''
