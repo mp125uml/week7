@@ -19,9 +19,7 @@ pipeline {
                }
           }
           stage("Code coverage") {
-	       when{
-                    branch "master"
-               }
+	       when { branch "master" }
 	       steps {
                     sh "./gradlew jacocoTestReport"
                     sh "./gradlew jacocoTestCoverageVerification"
