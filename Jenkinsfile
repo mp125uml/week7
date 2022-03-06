@@ -10,9 +10,8 @@ pipeline {
           }
           stage("Unit test") {
 	       when {
-		  not {
-		      expression {env.GIT_BRANCH == 'origin/playground'}
-		  }
+		  expression {env.GIT_BRANCH == 'origin/master'}
+		  expression {env.GIT_BRANCH == 'origin/feature'}
                }
                steps {
                     sh "./gradlew test"
@@ -29,9 +28,8 @@ pipeline {
           }
           stage("Static code analysis") {
               when {
-		 not {
-		     expression {env.GIT_BRANCH == 'origin/playground'}
-		 }
+		 expression {env.GIT_BRANCH == 'origin/master'}
+		 expression {env.GIT_BRANCH == 'origin/feature'}
               }
               steps {
                     sh "./gradlew checkstyleMain"
@@ -39,9 +37,8 @@ pipeline {
           }
 	  stage("Checkstyle added") {
               when {
-                 not {
-		   expression {env.GIT_BRANCH == 'origin/playground'}
-		 }
+		 expression {env.GIT_BRANCH == 'origin/master'}
+		 expression {env.GIT_BRANCH == 'origin/feature'}
 	      }
 	      steps {
 		   sh "./gradlew checkstyleTest"
