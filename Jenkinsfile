@@ -1,3 +1,43 @@
+properties([pipelineTriggers([githubPush()])])
+
+pipeline {
+     agent any
+     stages {
+	  stage("Compile") {
+               steps {
+                    sh "./gradlew compileJava"
+               }
+          }
+          stage("Unit test") {
+               steps {
+                    sh "./gradlew test"
+               }
+          }
+          stage("Code coverage") {
+               when { branch "main" }
+	       steps {
+                    sh "./gradlew jacocoTestReport"
+                    sh "./gradlew jacocoTestCoverageVerification"
+               }
+          }
+          stage("Static code analysis") {
+               steps {
+                    sh "./gradlew checkstyleMain"
+               }
+          }
+	  stage("Checkstyle added") {
+	      steps {
+		   sh "./gradlew checkstyleTest"
+	      }
+          }
+          stage("Package") {
+               steps {
+                    sh "./gradlew build"
+               }
+          }
+     }
+}
+
 podTemplate(yaml: '''
     apiVersion: v1
     kind: Pod
@@ -41,8 +81,8 @@ podTemplate(yaml: '''
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
-          cd /home/jenkins/agent/workspace/week7-kaniko
-          sed -i '4 a /** Main app */' /home/jenkins/agent/workspace/week7-kaniko/src/main/java/com/leszko/calculator/Calculator.java
+          cd /home/jenkins/agent/workspace/week7/Chapter08/sample1
+          sed -i '4 a /** Main app */' /home/jenkins/agent/workspace/week7/Chapter08/sample1/src/main/java/com/leszko/calculator/Calculator.java
           chmod +x gradlew
           ./gradlew build
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
@@ -60,7 +100,7 @@ podTemplate(yaml: '''
           echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
           ls /mnt/*jar
           mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination mattp262/hello-kaniko:1.0
+          /kaniko/executor --context `pwd` --destination dlambrig/hello-kaniko:1.0
           '''
         }
       }
@@ -68,4 +108,3 @@ podTemplate(yaml: '''
 
   }
 }
-
