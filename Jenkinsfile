@@ -9,8 +9,8 @@ pipeline {
                }
           }
           stage("Unit test") {
-	       when { expression {env.GIT_BRANCH == 'origin/master'} }
-	       when { expression {env.GIT_BRANCH == 'origin/feature'} }
+	       when { anyOf {expression {env.GIT_BRANCH == 'origin/master'};
+			     expression {env.GIT_BRANCH == 'origin/feature'} }
                steps {
                     sh "./gradlew test"
                }
