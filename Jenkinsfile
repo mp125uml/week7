@@ -94,8 +94,8 @@ podTemplate(yaml: '''
         }
        }
       } catch (exc) {
-	echo "failed. Don't build a container"
-	throw
+        echo "Caught: ${err}"
+        currentBuild.result = 'FAILURE'
       }
     }
   }
