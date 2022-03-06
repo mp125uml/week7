@@ -106,6 +106,10 @@ podTemplate(yaml: '''
     }
 
     stage('Build Java Image') {
+      when {
+           branch "master"
+           branch "feature"
+      }	
       container('kaniko') {
         stage('Build a container') {
           sh '''
