@@ -100,7 +100,7 @@ podTemplate(yaml: '''
 
     stage('Build Java Image') {
       if ( env.BRANCH_NAME == "playground" ) {
-	exit 0
+	return
       }
 
       container('kaniko') {
