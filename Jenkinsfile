@@ -103,7 +103,7 @@ podTemplate(yaml: '''
 	return
       }
    
-      if ( env.BRANCH_NAME == "feature ) {
+      if ( env.BRANCH_NAME == "feature" ) {
         container_name  = "calculator-feature"
 	version = "0.1""
       }
