@@ -93,8 +93,7 @@ podTemplate(yaml: '''
           '''
         }
        }
-      } catch {
-        echo "Caught: ${err}"
+      } catch (exc) {
         currentBuild.result = 'FAILURE'
       }
     }
