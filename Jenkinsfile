@@ -10,7 +10,8 @@ pipeline {
           }
           stage("Unit test") {
 	       when {
-		anyOf { branch 'origin/master'; branch 'origin/feature' }
+		  branch 'origin/master'
+		  branch 'origin/feature'
                }
                steps {
                     sh "./gradlew test"
