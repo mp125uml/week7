@@ -102,6 +102,11 @@ podTemplate(yaml: '''
       if ( env.BRANCH_NAME == "playground" ) {
 	return
       }
+   
+      if ( env.BRANCH_NAME == "feature ) {
+        container_name  = "calculator-feature"
+	version = "0.1""
+      }
 
       container('kaniko') {
         stage('Build a container') {
@@ -111,7 +116,7 @@ podTemplate(yaml: '''
           echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
           ls /mnt/*jar
           mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination mattp262/hello-kaniko:1.0
+          /kaniko/executor --context `pwd` --destination mattp262/${container_name}:${version}
           '''
         }
       }
