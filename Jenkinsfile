@@ -10,36 +10,35 @@ pipeline {
           }
           stage("Unit test") {
 	       when {
-               	 not {
-                    branch "playground"
-                 }
+                    branch "master"
+                    branch "feature"
                }
                steps {
                     sh "./gradlew test"
                }
           }
           stage("Code coverage") {
-	       when { branch "master" }
+	       when { 
+		    branch "master" 
+	       }
 	       steps {
                     sh "./gradlew jacocoTestReport"
                     sh "./gradlew jacocoTestCoverageVerification"
                }
           }
           stage("Static code analysis") {
-              when{
-                not {
-                    branch "playground"
-                }
+              when {
+                   branch "master"
+                   branch "feature"
               }
               steps {
                     sh "./gradlew checkstyleMain"
               }
           }
 	  stage("Checkstyle added") {
-              when{
-              	not {
-                    branch "playground"
-              	}
+              when {
+		   branch "master"
+		   branch "feature"
 	      }
 	      steps {
 		   sh "./gradlew checkstyleTest"
