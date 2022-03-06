@@ -28,14 +28,14 @@ jacocoTestCoverageVerification {
 	violationRules {
 		rule {
 			limit {
-				minimum = 0.1
+				minimum = 0.2
 			}
 		}
 	}
 }
 
 checkstyle {
-	checkstyleTest.enabled = true
+	checkstyleTest.enabled = false
 }
 
 task acceptanceTest(type: Test) {
@@ -44,12 +44,12 @@ task acceptanceTest(type: Test) {
 }
 
 task smokeTest(type: Test) {
-	include '**/smoke/**'
+	include '**/acceptance/**'
 	systemProperties System.getProperties()
 }
 
 test {
 	exclude '**/acceptance/**'
-	exclude '**/acceptance/**'
+	exclude '**/smoke/**'
 }
 jacoco { toolVersion= "0.8.6"}
