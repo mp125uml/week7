@@ -107,7 +107,7 @@ podTemplate(yaml: '''
     }
 
     stage('Build Java Image') {
-      container('calculator') {
+      container('kaniko') {
         stage('Build a container') {
           sh '''
           echo 'FROM openjdk:8-jre' > Dockerfile
