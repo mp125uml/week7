@@ -10,8 +10,7 @@ pipeline {
           }
           stage("Unit test") {
 	       when {
-                    branch 'master'
-                    branch 'feature'
+		anyOf { branch 'master'; branch 'feature' }
                }
                steps {
                     sh "./gradlew test"
@@ -28,8 +27,7 @@ pipeline {
           }
           stage("Static code analysis") {
               when {
-                   branch 'master'
-                   branch 'feature'
+		anyOf { branch 'master'; branch 'feature' }
               }
               steps {
                     sh "./gradlew checkstyleMain"
@@ -37,8 +35,7 @@ pipeline {
           }
 	  stage("Checkstyle added") {
               when {
-		   branch 'master'
-		   branch 'feature'
+		anyOf { branch 'master'; branch 'feature' }
 	      }
 	      steps {
 		   sh "./gradlew checkstyleTest"
