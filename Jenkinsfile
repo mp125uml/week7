@@ -105,7 +105,7 @@ podTemplate(yaml: '''
    
       if ( env.BRANCH_NAME == "feature" ) {
         container_name  = "calculator-feature"
-	version = "0.1""
+	version = "0.1"
       }
 
       container('kaniko') {
