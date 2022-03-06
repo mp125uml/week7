@@ -9,38 +9,35 @@ pipeline {
                }
           }
           stage("Unit test") {
-	       when {
-		  expression {env.GIT_BRANCH == 'origin/master'}
-		  expression {env.GIT_BRANCH == 'origin/feature'}
-               }
+	       when { anyOf {expression {env.GIT_BRANCH == 'origin/master'};
+			     expression {env.GIT_BRANCH == 'origin/feature'} }
+	       }
                steps {
                     sh "./gradlew test"
                }
           }
           stage("Code coverage") {
-	       when {
-		  expression {env.GIT_BRANCH == 'origin/master'} 
-	       }
+	       when { anyOf {expression {env.GIT_BRANCH == 'origin/master'};
+                             expression {env.GIT_BRANCH == 'origin/feature'} }
+               }	       
 	       steps {
                     sh "./gradlew jacocoTestReport"
                     sh "./gradlew jacocoTestCoverageVerification"
                }
           }
           stage("Static code analysis") {
-              when {
-		 expression {env.GIT_BRANCH == 'origin/master'}
-		 expression {env.GIT_BRANCH == 'origin/feature'}
-              }
+	       when { anyOf {expression {env.GIT_BRANCH == 'origin/master'};
+                             expression {env.GIT_BRANCH == 'origin/feature'} }
+               }
               steps {
                     sh "./gradlew checkstyleMain"
               }
           }
 	  stage("Checkstyle added") {
-              when {
-		 expression {env.GIT_BRANCH == 'origin/master'}
-		 expression {env.GIT_BRANCH == 'origin/feature'}
-	      }
-	      steps {
+	       when { anyOf {expression {env.GIT_BRANCH == 'origin/master'};
+                             expression {env.GIT_BRANCH == 'origin/feature'} }
+               }	      
+	       steps {
 		   sh "./gradlew checkstyleTest"
 	      }
           }
