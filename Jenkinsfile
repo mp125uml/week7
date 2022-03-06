@@ -92,6 +92,7 @@ podTemplate(yaml: '''
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
           '''
         }
+       }
       } catch (exc) {
 	echo "failed. Don't build a container"
 	throw
