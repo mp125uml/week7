@@ -88,7 +88,7 @@ podTemplate(yaml: '''
           cd /home/jenkins/agent/workspace/week7_$BRANCH_NAME/
           sed -i '4 a /** Main app */' /home/jenkins/agent/workspace/week7_$BRANCH_NAME/src/main/java/com/leszko/calculator/Calculator.java
           chmod +x gradlew
-          ./gradlew build
+          ./gradlew buil
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
           '''
         }
