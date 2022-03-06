@@ -9,22 +9,36 @@ pipeline {
                }
           }
           stage("Unit test") {
+	       when {
+               not {
+                    branch "playground"
+               }
                steps {
                     sh "./gradlew test"
                }
           }
           stage("Code coverage") {
+               not {
+                    branch "playground"
+		    branch "feature"
+               }
 	       steps {
                     sh "./gradlew jacocoTestReport"
                     sh "./gradlew jacocoTestCoverageVerification"
                }
           }
           stage("Static code analysis") {
+    	       not {
+                    branch "playground"
+               }
                steps {
                     sh "./gradlew checkstyleMain"
                }
           }
 	  stage("Checkstyle added") {
+              not {
+                    branch "playground"
+              }
 	      steps {
 		   sh "./gradlew checkstyleTest"
 	      }
@@ -91,7 +105,7 @@ podTemplate(yaml: '''
     }
 
     stage('Build Java Image') {
-      container('kaniko') {
+      container('calculator') {
         stage('Build a container') {
           sh '''
           echo 'FROM openjdk:8-jre' > Dockerfile
