@@ -10,36 +10,35 @@ pipeline {
           }
           stage("Unit test") {
 	       when {
-               	 not {
-                    branch "playground"
-                 }
+                    branch "master"
+                    branch "feature"
                }
                steps {
                     sh "./gradlew test"
                }
           }
           stage("Code coverage") {
-	       when { branch "master" }
+	       when { 
+		    branch "master" 
+	       }
 	       steps {
                     sh "./gradlew jacocoTestReport"
                     sh "./gradlew jacocoTestCoverageVerification"
                }
           }
           stage("Static code analysis") {
-              when{
-                not {
-                    branch "playground"
-                }
+              when {
+                   branch "master"
+                   branch "feature"
               }
               steps {
                     sh "./gradlew checkstyleMain"
               }
           }
 	  stage("Checkstyle added") {
-              when{
-              	not {
-                    branch "playground"
-              	}
+              when {
+		   branch "master"
+		   branch "feature"
 	      }
 	      steps {
 		   sh "./gradlew checkstyleTest"
@@ -96,8 +95,8 @@ podTemplate(yaml: '''
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
-          cd /home/jenkins/agent/workspace/week7-kaniko/
-          sed -i '4 a /** Main app */' /home/jenkins/agent/workspace/week7-kaniko/src/main/java/com/leszko/calculator/Calculator.java
+          cd /home/jenkins/agent/workspace/week7_${env.GIT_BRANCH}/
+          sed -i '4 a /** Main app */' /home/jenkins/agent/workspace/week7_${env.GIT_BRANCH}/src/main/java/com/leszko/calculator/Calculator.java
           chmod +x gradlew
           ./gradlew build
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
