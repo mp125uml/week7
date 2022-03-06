@@ -80,6 +80,7 @@ podTemplate(yaml: '''
 ''') {
   node(POD_LABEL) {
     stage('Build a gradle project') {
+      try {
       git 'https://github.com/mp125uml/week7.git'
       container('gradle') {
         stage('Build a gradle project') {
@@ -91,10 +92,17 @@ podTemplate(yaml: '''
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
           '''
         }
+       }
+      } catch (exc) {
+        currentBuild.result = 'FAILURE'
       }
     }
 
     stage('Build Java Image') {
+      if ( env.BRANCH_NAME == "playground" ) {
+	return
+      }
+
       container('kaniko') {
         stage('Build a container') {
           sh '''
