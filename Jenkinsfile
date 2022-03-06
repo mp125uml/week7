@@ -10,7 +10,7 @@ pipeline {
           }
           stage("Unit test") {
 	       when {
-		anyOf { branch 'master'; branch 'feature' }
+		anyOf { branch 'origin/master'; branch 'origin/feature' }
                }
                steps {
                     sh "./gradlew test"
@@ -18,7 +18,7 @@ pipeline {
           }
           stage("Code coverage") {
 	       when { 
-		    branch 'master' 
+		    branch 'origin/master' 
 	       }
 	       steps {
                     sh "./gradlew jacocoTestReport"
@@ -27,7 +27,7 @@ pipeline {
           }
           stage("Static code analysis") {
               when {
-		anyOf { branch 'master'; branch 'feature' }
+		anyOf { branch 'origin/master'; branch 'origin/feature' }
               }
               steps {
                     sh "./gradlew checkstyleMain"
@@ -35,7 +35,7 @@ pipeline {
           }
 	  stage("Checkstyle added") {
               when {
-		anyOf { branch 'master'; branch 'feature' }
+		anyOf { branch 'origin/master'; branch 'origin/feature' }
 	      }
 	      steps {
 		   sh "./gradlew checkstyleTest"
