@@ -106,10 +106,10 @@ podTemplate(yaml: '''
       container('kaniko') {
         stage('Build a container') {
           sh '''
-          if [ env.BRANCH_NAME == "master ]
+          if [ env.BRANCH_NAME == "feature" ]
           then
-	     container_name="calculator"
-	     version="1.0"
+	     container_name="calculator-feature"
+	     version="0.1"
           fi
           echo "$container_name:$version"
           echo 'FROM openjdk:8-jre' > Dockerfile
