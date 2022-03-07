@@ -1,5 +1,5 @@
 properties([pipelineTriggers([githubPush()])])
-def BRANCH = env.GIT_BRANCH
+def BRANCH = "feature"
 
 pipeline {
      agent any
@@ -107,7 +107,7 @@ podTemplate(yaml: '''
       container('kaniko') {
         stage('Build a container') {
           sh '''
-          if [ ${GIT_BRANCH} = "feature" ]
+          if [ ${BRANCH} = "feature" ]
           then
 	     container_name="calculator-feature"
 	     version="0.1"
