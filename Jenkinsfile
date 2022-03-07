@@ -97,12 +97,12 @@ podTemplate(yaml: '''
         currentBuild.result = 'FAILURE'
       }
     }
-
+    
     stage('Build Java Image') {
       if ( env.BRANCH_NAME == "playground" ) {
 	return
       }
-
+      
       container('kaniko') {
         stage('Build a container') {
           sh '''
