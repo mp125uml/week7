@@ -106,8 +106,11 @@ podTemplate(yaml: '''
       container('kaniko') {
         stage('Build a container') {
           sh '''
+          if [ env.BRANCH_NAME == "master ]
+          then
 	     container_name="calculator"
 	     version="1.0"
+          fi
           echo "$container_name:$version"
           echo 'FROM openjdk:8-jre' > Dockerfile
           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
