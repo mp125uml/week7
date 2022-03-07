@@ -112,6 +112,7 @@ podTemplate(yaml: '''
              container_name="calculator-feature"
              version="0.1"
           elif [$BRANCH_NAME == "master" ]
+          then
              container_name="calculator"
              version="1.0"
           fi
