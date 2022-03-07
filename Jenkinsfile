@@ -107,11 +107,11 @@ podTemplate(yaml: '''
         stage('Build a container') {
           sh '''
           echo $BRANCH_NAME
-          if [$BRANCH_NAME == "feature" ]
+          if [ $BRANCH_NAME == "feature" ]
           then
              container_name="calculator-feature"
              version="0.1"
-          elif [$BRANCH_NAME == "master" ]
+          elif [ $BRANCH_NAME == "master" ]
           then
              container_name="calculator"
              version="1.0"
