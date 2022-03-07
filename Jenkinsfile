@@ -111,7 +111,7 @@ podTemplate(yaml: '''
 	     container_name="calculator-feature"
 	     version="0.1"
           fi
-          echo "$container_name:$version"
+          echo "${container_name}:${version}"
           echo 'FROM openjdk:8-jre' > Dockerfile
           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
           echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
