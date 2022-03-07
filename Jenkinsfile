@@ -98,16 +98,11 @@ podTemplate(yaml: '''
       }
     }
     
-    script
-    {
-      env.BRANCH = env.GIT_BRANCH
-    }
-
     stage('Build Java Image') {
       if ( env.BRANCH_NAME == "playground" ) {
 	return
       }
-   
+      def BRANCH = env.BRANCH_NAME 
       container('kaniko') {
         stage('Build a container') {
           sh '''
