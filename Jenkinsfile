@@ -1,5 +1,4 @@
 properties([pipelineTriggers([githubPush()])])
-def BRANCH = "feature"
 
 pipeline {
      agent any
@@ -97,6 +96,11 @@ podTemplate(yaml: '''
       } catch (exc) {
         currentBuild.result = 'FAILURE'
       }
+    }
+    
+    script
+    {
+      env.BRANCH = env.GIT_BRANCH
     }
 
     stage('Build Java Image') {
